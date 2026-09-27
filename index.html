@@ -292,6 +292,64 @@ footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px so
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+/* ===== CASE STUDIES ===== */
+.case-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+}
+@media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
+
+.case-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; overflow: hidden; transition: all 0.3s;
+}
+.case-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px #00000012; }
+
+.case-header {
+  padding: 24px 24px 16px;
+}
+.case-category {
+  font-size: 11px; letter-spacing: 2px; color: var(--text-faint);
+  text-transform: uppercase; margin-bottom: 6px; font-family: var(--display);
+}
+.case-title {
+  font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 2px;
+}
+.case-artist {
+  font-size: 13px; color: var(--text-soft);
+}
+
+.case-palette {
+  display: flex; height: 56px; margin: 0 24px;
+  border-radius: 10px; overflow: hidden;
+}
+.case-swatch {
+  flex: 1; cursor: pointer; position: relative;
+  transition: flex 0.3s;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 4px;
+}
+.case-swatch:hover { flex: 1.5; }
+.case-swatch .hex-label {
+  font-family: var(--mono); font-size: 9px; color: #fff;
+  background: #00000040; padding: 1px 4px; border-radius: 3px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.case-swatch:hover .hex-label { opacity: 1; }
+
+.case-principles {
+  display: flex; flex-wrap: wrap; gap: 6px; padding: 16px 24px 0;
+}
+.case-principle {
+  font-size: 11px; padding: 3px 10px; border-radius: 20px;
+  background: var(--accent-soft); color: var(--accent);
+  font-weight: 500;
+}
+
+.case-analysis {
+  padding: 14px 24px 24px;
+  font-size: 13px; color: var(--text-soft); line-height: 1.9;
+}
+.case-analysis strong { color: var(--text); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -306,6 +364,7 @@ footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px so
       <a href="#wheel" data-nav="wheel">色轮</a>
       <a href="#emotion" data-nav="emotion">情感</a>
       <a href="#traditional" data-nav="traditional">传统色</a>
+      <a href="#cases" data-nav="cases">案例</a>
     </div>
   </div>
 </nav>
@@ -491,6 +550,21 @@ footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px so
   </div>
 </section>
 
+  <!-- 06 CASE STUDIES -->
+  <section id="cases" style="background:var(--bg-alt);">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-num">CHAPTER 06</div>
+        <h2 class="section-title">大师如何用色</h2>
+        <div class="section-subtitle">Color in Masterpieces</div>
+        <p class="section-desc">
+          色彩理论不只是公式。从梵高的星空到千里江山，从维米尔的少女到纪念碑谷的几何，
+          真正的色彩大师懂得在规则之内创造情感。以下六个案例，拆解它们为什么这样搭。
+        </p>
+      </div>
+      <div class="case-grid reveal" id="caseGrid"></div>
+    </div>
+  </section>
 <!-- FOOTER -->
 <footer>
   <p>色彩志 · Color Atlas — 互动色彩美学科普杂志</p>
@@ -755,6 +829,91 @@ window.addEventListener('scroll', () => {
   navLinks.forEach(link => {
     link.classList.toggle('active', link.dataset.nav === current);
   });
+});
+// ===== CASE STUDIES =====
+const cases = [
+  {
+    category: "油画 · Oil Painting",
+    title: "星月夜",
+    artist: "文森特·梵高 · 1889",
+    palette: ["#0D2B45", "#1B4F72", "#2E86C1", "#F4D03F", "#F39C12", "#E74C3C"],
+    principles: ["互补色", "高饱和", "冷暖对比"],
+    analysis: "梵高用<strong>深蓝与亮黄的互补色对撞</strong>制造漩涡般的能量。蓝色占据画面的70%以上，奠定夜空的沉静基调；而月亮和星星用极高饱和度的黄色，在深蓝背景中像火焰一样燃烧。这种<strong>大面积冷色+小面积暖色</strong>的配比，既保持了整体统一，又让焦点不可忽视。旋转的笔触让色彩不是静止的色块，而是流动的情绪。"
+  },
+  {
+    category: "油画 · Oil Painting",
+    title: "睡莲",
+    artist: "克劳德·莫奈 · 1906",
+    palette: ["#8FA8B8", "#A8C0B0", "#C5D5C5", "#D4C5A9", "#B8A088", "#6B8E7F"],
+    principles: ["邻近色", "低饱和", "柔和过渡"],
+    analysis: "莫奈几乎不用纯色，所有颜色都<strong>混入了灰色调</strong>，让画面像蒙了一层水雾。蓝、绿、黄三个色相在色轮上相邻（邻近色），本身就和谐；再加上低饱和度，色彩之间的边界变得模糊。这就是印象派的核心——<strong>不是画物体，而是画光在物体上的感觉</strong>。你盯着看久了，会觉得水面真的在动。"
+  },
+  {
+    category: "油画 · Oil Painting",
+    title: "戴珍珠耳环的少女",
+    artist: "约翰内斯·维米尔 · 1665",
+    palette: ["#1A1A2E", "#2C3E50", "#8B4513", "#D4A574", "#F5DEB3", "#E8D5B7"],
+    principles: ["互补色", "明暗法", "有限色域"],
+    analysis: "维米尔用了<strong>最克制的配色</strong>：蓝色头巾、黄色外套、深色背景，仅此而已。蓝和黄是互补色，但两者都降低了饱和度——蓝色偏灰、黄色偏暖，所以对比不刺眼反而柔和。最精妙的是<strong>明暗法（Chiaroscuro）</strong>：一束侧光打在脸上，从亮部的米白到暗部的深棕，中间过渡了至少5个色阶。珍珠耳环上那一点高光，是整幅画的呼吸。"
+  },
+  {
+    category: "中国画 · Chinese Painting",
+    title: "千里江山图",
+    artist: "王希孟 · 北宋 · 1113",
+    palette: ["#1A3C5E", "#2E5E4E", "#4A8B7A", "#7AB8A0", "#C9A86C", "#8B4513"],
+    principles: ["青绿主导", "赭石点缀", "随类赋彩"],
+    analysis: "这是中国画<strong>青绿山水</strong>的巅峰。石青和石绿是矿物颜料，覆盖力极强，千年不褪色。画面以冷色（青、绿）为主调，占据80%以上，营造江山的辽阔与清冷；只在屋顶、桥梁、人物处用<strong>赭石（暖棕）和泥金</strong>点缀。这种<strong>大冷小暖</strong>的配比，让千里江山有了人的温度。中国画论叫「随类赋彩」——不是写实，是给每一类事物赋予它该有的颜色气质。"
+  },
+  {
+    category: "游戏 · Video Game",
+    title: "纪念碑谷",
+    artist: "ustwo · 2014",
+    palette: ["#F5E6D3", "#E8B4B8", "#A8C0D0", "#7B9EB0", "#D4A574", "#2C3E50"],
+    principles: ["低饱和", "马卡龙色", "几何色块"],
+    analysis: "纪念碑谷的配色是<strong>「马卡龙色系」</strong>的教科书：所有颜色都加入了大量白色和灰色，饱和度极低。粉、蓝、黄三个色相在色轮上间隔较远（有对比），但因为都降了饱和，对比变得温柔。<strong>每个建筑几何块只用一个纯色</strong>，块与块之间靠明暗和色相区分，没有渐变没有纹理。这种极简配色让玩家的注意力完全集中在空间错觉上——色彩不抢戏，但营造了梦境般的氛围。"
+  },
+  {
+    category: "游戏 · Video Game",
+    title: "原神 · 璃月",
+    artist: "miHoYo · 2020",
+    palette: ["#8B0000", "#C41E3A", "#D4A017", "#2C5F4E", "#1A3A5C", "#F5E6D3"],
+    principles: ["中国传统色", "暖冷对比", "高识别度"],
+    analysis: "璃月的配色直接取自<strong>中国传统色体系</strong>：宫墙红（朱砂）、琉璃黄（藤黄）、青山绿（石青）、夜空蓝（黛蓝）。主城区域以<strong>暖色（红+黄）为主</strong>，传递繁华和烟火气；野外山区以<strong>冷色（青+蓝）为主</strong>，传递山水的辽阔。角色设计也遵循这个逻辑——岩王帝君的金+棕，胡桃的红+黑，每个角色的配色都能在中国传统色里找到出处。这是<strong>用色彩做文化叙事</strong>的典范。"
+  }
+];
+
+const caseGrid = document.getElementById('caseGrid');
+cases.forEach((c, i) => {
+  const card = document.createElement('div');
+  card.className = 'case-card';
+  let paletteHtml = '';
+  c.palette.forEach(hex => {
+    paletteHtml += '<div class="case-swatch" style="background:' + hex + '" data-hex="' + hex + '">' +
+      '<span class="hex-label">' + hex + '</span></div>';
+  });
+  let principlesHtml = '';
+  c.principles.forEach(p => {
+    principlesHtml += '<span class="case-principle">' + p + '</span>';
+  });
+  card.innerHTML =
+    '<div class="case-header">' +
+      '<div class="case-category">' + c.category + '</div>' +
+      '<div class="case-title">' + c.title + '</div>' +
+      '<div class="case-artist">' + c.artist + '</div>' +
+    '</div>' +
+    '<div class="case-palette">' + paletteHtml + '</div>' +
+    '<div class="case-principles">' + principlesHtml + '</div>' +
+    '<div class="case-analysis">' + c.analysis + '</div>';
+  // Click swatch to copy
+  card.querySelectorAll('.case-swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      const hex = sw.dataset.hex;
+      navigator.clipboard.writeText(hex);
+      sw.querySelector('.hex-label').textContent = '已复制!';
+      setTimeout(() => sw.querySelector('.hex-label').textContent = hex, 1500);
+    });
+  });
+  caseGrid.appendChild(card);
 });
 </script>
 </body>
