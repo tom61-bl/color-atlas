@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>色彩志 · Color Atlas — 互动色彩美学科普</title>
+<meta name="description" content="色彩志：一本可翻阅的互动色彩美学科普杂志。从光与色到中国传统色，6大章节，5个互动演示。">
+<meta property="og:title" content="色彩志 · Color Atlas">
+<meta property="og:description" content="互动色彩美学科普杂志">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23e63946'/%3E%3Cstop offset='0.5' stop-color='%23f4a261'/%3E%3Cstop offset='1' stop-color='%23264653'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --bg-alt: #ebe8e0;
+  --text: #1a1a1a;
+  --text-soft: #1a1a1a/60;
+  --text-faint: #1a1a1a/35;
+  --accent: #e63946;
+  --accent-soft: #e6394620;
+  --border: #1a1a1a/10;
+  --card: #ffffff;
+  --serif: 'Noto Serif SC', serif;
+  --sans: 'Noto Sans SC', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Space Grotesk', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background 0.8s ease;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg)/90;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  height: 56px; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--serif); font-weight: 900; font-size: 18px;
+  letter-spacing: 2px; text-decoration: none; color: var(--text);
+}
+.nav-links { display: flex; gap: 24px; }
+.nav-links a {
+  font-size: 13px; color: var(--text-soft); text-decoration: none;
+  transition: color 0.2s; font-weight: 500;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a.active { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+}
+
+/* ===== SECTIONS ===== */
+section {
+  min-height: 100vh;
+  padding: 100px 24px 80px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.section-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+.section-num {
+  font-family: var(--mono); font-size: 12px; color: var(--text-faint);
+  letter-spacing: 3px; margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--serif); font-size: clamp(32px, 5vw, 56px);
+  font-weight: 900; line-height: 1.2; margin-bottom: 8px;
+}
+.section-subtitle {
+  font-family: var(--display); font-size: 14px; color: var(--text-faint);
+  letter-spacing: 4px; text-transform: uppercase; margin-bottom: 48px;
+}
+.section-desc {
+  font-size: 16px; color: var(--text-soft); max-width: 640px;
+  line-height: 1.9; margin-bottom: 40px;
+}
+
+/* ===== COVER ===== */
+#cover {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+  color: #f5f3ee; text-align: center; position: relative; overflow: hidden;
+}
+#cover .section-num { color: #f5f3ee/40; }
+#cover .section-title { color: #f5f3ee; font-size: clamp(48px, 8vw, 96px); }
+.cover-sub {
+  font-family: var(--display); font-size: 16px; color: #f5f3ee/50;
+  letter-spacing: 6px; margin-top: 16px;
+}
+.cover-wheel {
+  width: 200px; height: 200px; margin: 48px auto;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000
+  );
+  animation: wheelSpin 20s linear infinite;
+  box-shadow: 0 0 80px #ffffff20, inset 0 0 40px #00000040;
+  position: relative;
+}
+.cover-wheel::after {
+  content: ''; position: absolute; inset: 30%;
+  background: #1a1a2e; border-radius: 50%;
+}
+@keyframes wheelSpin { to { transform: rotate(360deg); } }
+.cover-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  font-size: 12px; color: #f5f3ee/40; letter-spacing: 2px;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ===== RGB MIXER ===== */
+.mixer-container {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+@media (max-width: 768px) { .mixer-container { grid-template-columns: 1fr; } }
+
+.mixer-preview {
+  aspect-ratio: 1; border-radius: 24px;
+  box-shadow: 0 20px 60px #00000015;
+  transition: background 0.1s;
+  display: flex; align-items: flex-end; padding: 24px;
+}
+.mixer-preview-val {
+  font-family: var(--mono); font-size: 14px; color: #fff;
+  background: #00000040; padding: 6px 12px; border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+
+.slider-group { margin-bottom: 28px; }
+.slider-label {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px; font-size: 14px; font-weight: 500;
+}
+.slider-label span:last-child { font-family: var(--mono); font-size: 13px; color: var(--text-faint); }
+.slider-track {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 8px;
+  border-radius: 4px; outline: none; cursor: pointer;
+}
+.slider-track::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--text);
+  cursor: pointer; box-shadow: 0 2px 8px #00000020;
+}
+.slider-r { background: linear-gradient(to right, #000, #ff0000); }
+.slider-g { background: linear-gradient(to right, #000, #00ff00); }
+.slider-b { background: linear-gradient(to right, #000, #0000ff); }
+
+/* ===== HSL PALETTE ===== */
+.hsl-container {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+@media (max-width: 768px) { .hsl-container { grid-template-columns: 1fr; } }
+
+.hsl-bigcolor {
+  aspect-ratio: 4/3; border-radius: 20px;
+  box-shadow: 0 20px 60px #00000015;
+  transition: background 0.1s;
+  margin-bottom: 16px;
+}
+.hsl-values {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+.hsl-value-box {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px; text-align: center;
+}
+.hsl-value-box .label { font-size: 11px; color: var(--text-faint); letter-spacing: 1px; margin-bottom: 4px; }
+.hsl-value-box .value { font-family: var(--mono); font-size: 14px; font-weight: 500; }
+
+/* ===== COLOR WHEEL ===== */
+.wheel-container {
+  display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center;
+}
+@media (max-width: 768px) { .wheel-container { grid-template-columns: 1fr; } }
+
+#colorWheel {
+  border-radius: 50%; cursor: crosshair;
+  box-shadow: 0 20px 60px #00000015;
+}
+
+.harmony-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.harmony-tab {
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--card); font-size: 13px; cursor: pointer;
+  transition: all 0.2s; font-weight: 500;
+}
+.harmony-tab.active {
+  background: var(--text); color: var(--bg); border-color: var(--text);
+}
+
+.harmony-result {
+  display: flex; gap: 8px; margin-bottom: 20px;
+}
+.harmony-swatch {
+  flex: 1; aspect-ratio: 1; border-radius: 12px;
+  display: flex; align-items: flex-end; padding: 8px;
+  cursor: pointer; transition: transform 0.2s;
+  box-shadow: 0 4px 12px #00000010;
+}
+.harmony-swatch:hover { transform: scale(1.05); }
+.harmony-swatch .hex {
+  font-family: var(--mono); font-size: 10px; color: #fff;
+  background: #00000040; padding: 2px 6px; border-radius: 4px;
+}
+
+/* ===== EMOTION ===== */
+.emotion-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 48px;
+}
+@media (max-width: 768px) { .emotion-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.emotion-card {
+  aspect-ratio: 3/4; border-radius: 16px; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 20px; transition: all 0.3s; position: relative; overflow: hidden;
+}
+.emotion-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px #00000020; }
+.emotion-card .em-name {
+  font-family: var(--serif); font-size: 20px; font-weight: 700; color: #fff;
+  text-shadow: 0 2px 8px #00000040;
+}
+.emotion-card .em-en {
+  font-family: var(--display); font-size: 11px; color: #ffffff80;
+  letter-spacing: 2px; margin-top: 2px;
+}
+
+.emotion-detail {
+  background: var(--card); border-radius: 20px; padding: 32px;
+  border: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+}
+@media (max-width: 768px) { .emotion-detail { grid-template-columns: 1fr; } }
+.emotion-detail h3 { font-family: var(--serif); font-size: 24px; margin-bottom: 12px; }
+.emotion-detail p { font-size: 14px; color: var(--text-soft); line-height: 1.9; }
+.emotion-detail .culture-tag {
+  display: inline-block; padding: 4px 10px; border-radius: 6px;
+  font-size: 11px; font-weight: 500; margin-right: 8px; margin-bottom: 8px;
+}
+
+/* ===== TRADITIONAL COLORS ===== */
+.traditional-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.trad-card {
+  border-radius: 14px; overflow: hidden; cursor: pointer;
+  transition: all 0.3s; background: var(--card);
+  border: 1px solid var(--border);
+}
+.trad-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px #00000015; }
+.trad-swatch { height: 100px; }
+.trad-info { padding: 12px; }
+.trad-name { font-family: var(--serif); font-size: 16px; font-weight: 700; }
+.trad-pinyin { font-family: var(--display); font-size: 10px; color: var(--text-faint); letter-spacing: 1px; }
+.trad-hex { font-family: var(--mono); font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+.trad-meaning { font-size: 11px; color: var(--text-faint); margin-top: 6px; line-height: 1.6; }
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 48px 24px; text-align: center;
+  border-top: 1px solid var(--border);
+}
+footer p { font-size: 13px; color: var(--text-faint); }
+footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#cover" class="nav-logo">色彩志</a>
+    <div class="nav-links">
+      <a href="#what" data-nav="what">色彩是什么</a>
+      <a href="#hsl" data-nav="hsl">三要素</a>
+      <a href="#wheel" data-nav="wheel">色轮</a>
+      <a href="#emotion" data-nav="emotion">情感</a>
+      <a href="#traditional" data-nav="traditional">传统色</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 00 COVER -->
+<section id="cover">
+  <div class="section-inner">
+    <div class="section-num">VOL.01 · 2026</div>
+    <h1 class="section-title">色彩志</h1>
+    <div class="cover-sub">COLOR ATLAS · 互动色彩美学科普</div>
+    <div class="cover-wheel"></div>
+    <p style="color:#f5f3ee/50;font-size:14px;max-width:480px;margin:0 auto;line-height:1.9;">
+      从一束光到一抹朱砂，色彩是视觉最直接的语言。<br>
+      翻开这本杂志，用六个章节重新认识颜色。
+    </p>
+  </div>
+  <div class="cover-scroll">向下滚动 ↓</div>
+</section>
+
+<!-- 01 WHAT IS COLOR -->
+<section id="what">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-num">CHAPTER 01</div>
+      <h2 class="section-title">色彩是什么</h2>
+      <div class="section-subtitle">What is Color</div>
+      <p class="section-desc">
+        色彩不是物体本身的属性，而是光与眼睛和大脑共同制造的幻觉。
+        牛顿用三棱镜把白光拆成七色，证明了颜色来自光的波长。
+        在屏幕上，所有颜色都由红、绿、蓝三束光混合而成——这就是加色法。
+      </p>
+    </div>
+    <div class="mixer-container reveal">
+      <div class="mixer-preview" id="rgbPreview">
+        <span class="mixer-preview-val" id="rgbHex">#808080</span>
+      </div>
+      <div>
+        <div class="slider-group">
+          <div class="slider-label"><span>红 · Red</span><span id="rVal">128</span></div>
+          <input type="range" class="slider-track slider-r" id="rSlider" min="0" max="255" value="128">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label"><span>绿 · Green</span><span id="gVal">128</span></div>
+          <input type="range" class="slider-track slider-g" id="gSlider" min="0" max="255" value="128">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label"><span>蓝 · Blue</span><span id="bVal">128</span></div>
+          <input type="range" class="slider-track slider-b" id="bSlider" min="0" max="255" value="128">
+        </div>
+        <p style="font-size:13px;color:var(--text-faint);margin-top:16px;line-height:1.8;">
+          拖动三个滑块，观察红、绿、蓝光如何混合出千万种颜色。<br>
+          当三者都是 255 时得到白光；都是 0 时得到黑色。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 HSL -->
+<section id="hsl" style="background:var(--bg-alt);">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-num">CHAPTER 02</div>
+      <h2 class="section-title">色彩三要素</h2>
+      <div class="section-subtitle">Hue · Saturation · Lightness</div>
+      <p class="section-desc">
+        任何一种颜色都可以用三个维度描述：色相（Hue）决定它是红还是蓝，
+        饱和度（Saturation）决定它鲜艳还是灰暗，明度（Lightness）决定它亮还是暗。
+        理解了 HSL，你就掌握了调色的底层逻辑。
+      </p>
+    </div>
+    <div class="hsl-container reveal">
+      <div>
+        <div class="hsl-bigcolor" id="hslPreview"></div>
+        <div class="hsl-values">
+          <div class="hsl-value-box"><div class="label">HEX</div><div class="value" id="hslHex">#4A90D9</div></div>
+          <div class="hsl-value-box"><div class="label">RGB</div><div class="value" id="hslRgb">74,144,217</div></div>
+          <div class="hsl-value-box"><div class="label">HSL</div><div class="value" id="hslHsl">210,65%,57%</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="slider-group">
+          <div class="slider-label"><span>色相 · Hue</span><span id="hVal">210°</span></div>
+          <input type="range" class="slider-track" id="hSlider" min="0" max="360" value="210"
+            style="background:linear-gradient(to right,#ff0000,#ffff00,#00ff00,#00ffff,#0000ff,#ff00ff,#ff0000);">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label"><span>饱和度 · Saturation</span><span id="sVal">65%</span></div>
+          <input type="range" class="slider-track" id="sSlider" min="0" max="100" value="65">
+        </div>
+        <div class="slider-group">
+          <div class="slider-label"><span>明度 · Lightness</span><span id="lVal">57%</span></div>
+          <input type="range" class="slider-track" id="lSlider" min="0" max="100" value="57">
+        </div>
+        <p style="font-size:13px;color:var(--text-faint);margin-top:16px;line-height:1.8;">
+          试试把饱和度降到 0%——所有颜色都变成灰色。<br>
+          把明度调到 0% 就是黑色，100% 就是白色。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 COLOR WHEEL -->
+<section id="wheel">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-num">CHAPTER 03</div>
+      <h2 class="section-title">色轮与和谐</h2>
+      <div class="section-subtitle">Color Wheel & Harmony</div>
+      <p class="section-desc">
+        色轮是色彩搭配的地图。选定一个基色后，按照固定角度在色轮上找搭档，
+        就能得到和谐的配色方案。互补色对比强烈，邻近色柔和统一，三角色活泼均衡。
+      </p>
+    </div>
+    <div class="wheel-container reveal">
+      <canvas id="colorWheel" width="320" height="320"></canvas>
+      <div>
+        <div class="harmony-tabs" id="harmonyTabs">
+          <button class="harmony-tab active" data-harmony="complementary">互补色</button>
+          <button class="harmony-tab" data-harmony="analogous">邻近色</button>
+          <button class="harmony-tab" data-harmony="triadic">三角色</button>
+          <button class="harmony-tab" data-harmony="split">分裂互补</button>
+          <button class="harmony-tab" data-harmony="tetradic">四角色</button>
+        </div>
+        <div class="harmony-result" id="harmonyResult"></div>
+        <p style="font-size:13px;color:var(--text-faint);line-height:1.8;">
+          点击色轮选择基色，切换上方标签查看不同和谐配色。<br>
+          点击色块可复制 HEX 色值。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 EMOTION -->
+<section id="emotion" style="background:var(--bg-alt);">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-num">CHAPTER 04</div>
+      <h2 class="section-title">色彩与情感</h2>
+      <div class="section-subtitle">Color & Emotion</div>
+      <p class="section-desc">
+        颜色能直接触发情绪。红色让人心跳加速，蓝色让人平静放松。
+        但色彩的寓意不是普世的——同一种颜色，在东方和西方可能有截然不同的文化含义。
+        点击下方色块，感受色彩的情绪力量。
+      </p>
+    </div>
+    <div class="emotion-grid reveal" id="emotionGrid"></div>
+    <div class="emotion-detail reveal" id="emotionDetail">
+      <div>
+        <h3 id="emDetailName">红色 · Red</h3>
+        <p id="emDetailDesc">红色是可见光中波长最长的颜色，能直接刺激神经系统，使心跳加速、血压升高。它是火焰和血液的颜色，象征生命、热情和力量。</p>
+      </div>
+      <div>
+        <div style="margin-bottom:12px;">
+          <span class="culture-tag" style="background:#e6394620;color:#e63946;">中国</span>
+          <span id="emCn">吉祥、喜庆、繁荣、驱邪</span>
+        </div>
+        <div>
+          <span class="culture-tag" style="background:#1a1a1a10;color:var(--text-soft);">西方</span>
+          <span id="emWest">危险、激情、爱情、警告</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 TRADITIONAL -->
+<section id="traditional">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-num">CHAPTER 05</div>
+      <h2 class="section-title">中国传统色</h2>
+      <div class="section-subtitle">Traditional Chinese Colors</div>
+      <p class="section-desc">
+        中国人对颜色的命名，本身就是一首诗。朱砂、石青、藤黄、月白、黛蓝……
+        每一个名字背后都有矿物、植物或自然意象的出处。这些颜色从敦煌壁画到故宫建筑，
+        从宋词到青花瓷，构成了独属于东方的色彩美学。
+      </p>
+    </div>
+    <div class="traditional-grid reveal" id="traditionalGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>色彩志 · Color Atlas — 互动色彩美学科普杂志</p>
+  <p style="margin-top:8px;">Educational Purpose · Made with light</p>
+  <p style="margin-top:12px;"><a href="https://github.com/tom61-bl/color-atlas" target="_blank">GitHub</a> · <a href="https://tom61-bl.github.io/html-projects/" target="_blank">返回作品集</a></p>
+</footer>
+
+<script>
+// ===== RGB MIXER =====
+const rSlider = document.getElementById('rSlider');
+const gSlider = document.getElementById('gSlider');
+const bSlider = document.getElementById('bSlider');
+const rgbPreview = document.getElementById('rgbPreview');
+const rgbHex = document.getElementById('rgbHex');
+
+function toHex(n) { return parseInt(n).toString(16).padStart(2, '0').toUpperCase(); }
+
+function updateRGB() {
+  const r = +rSlider.value, g = +gSlider.value, b = +bSlider.value;
+  document.getElementById('rVal').textContent = r;
+  document.getElementById('gVal').textContent = g;
+  document.getElementById('bVal').textContent = b;
+  const hex = '#' + toHex(r) + toHex(g) + toHex(b);
+  rgbPreview.style.background = hex;
+  rgbHex.textContent = hex;
+  // Auto text color based on luminance
+  const lum = (0.299*r + 0.587*g + 0.114*b) / 255;
+  rgbHex.style.color = lum > 0.5 ? '#1a1a1a' : '#fff';
+  rgbHex.style.background = lum > 0.5 ? '#ffffff80' : '#00000040';
+}
+[rSlider, gSlider, bSlider].forEach(s => s.addEventListener('input', updateRGB));
+updateRGB();
+
+// ===== HSL PALETTE =====
+const hSlider = document.getElementById('hSlider');
+const sSlider = document.getElementById('sSlider');
+const lSlider = document.getElementById('lSlider');
+const hslPreview = document.getElementById('hslPreview');
+
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  return [Math.round(f(0)*255), Math.round(f(8)*255), Math.round(f(4)*255)];
+}
+
+function updateHSL() {
+  const h = +hSlider.value, s = +sSlider.value, l = +lSlider.value;
+  document.getElementById('hVal').textContent = h + '°';
+  document.getElementById('sVal').textContent = s + '%';
+  document.getElementById('lVal').textContent = l + '%';
+  const [r, g, b] = hslToRgb(h, s, l);
+  const hex = '#' + toHex(r) + toHex(g) + toHex(b);
+  hslPreview.style.background = hex;
+  document.getElementById('hslHex').textContent = hex;
+  document.getElementById('hslRgb').textContent = r + ',' + g + ',' + b;
+  document.getElementById('hslHsl').textContent = h + ',' + s + '%,' + l + '%';
+}
+[hSlider, sSlider, lSlider].forEach(s => s.addEventListener('input', updateHSL));
+updateHSL();
+
+// ===== COLOR WHEEL =====
+const canvas = document.getElementById('colorWheel');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const cx = W/2, cy = H/2, radius = W/2 - 10;
+let baseHue = 210;
+let currentHarmony = 'complementary';
+
+function drawWheel() {
+  ctx.clearRect(0, 0, W, H);
+  // Draw color wheel
+  for (let angle = 0; angle < 360; angle++) {
+    const startAngle = (angle - 1) * Math.PI / 180;
+    const endAngle = (angle + 1) * Math.PI / 180;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, startAngle, endAngle);
+    ctx.closePath();
+    ctx.fillStyle = `hsl(${angle}, 75%, 55%)`;
+    ctx.fill();
+  }
+  // Inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius * 0.35, 0, Math.PI * 2);
+  ctx.fillStyle = '#f5f3ee';
+  ctx.fill();
+  // Base hue indicator
+  const rad = baseHue * Math.PI / 180;
+  const ix = cx + Math.cos(rad) * radius * 0.68;
+  const iy = cy + Math.sin(rad) * radius * 0.68;
+  ctx.beginPath();
+  ctx.arc(ix, iy, 10, 0, Math.PI * 2);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+}
+
+function getHarmonyColors(hue) {
+  switch(currentHarmony) {
+    case 'complementary': return [hue, (hue + 180) % 360];
+    case 'analogous': return [(hue - 30 + 360) % 360, hue, (hue + 30) % 360];
+    case 'triadic': return [hue, (hue + 120) % 360, (hue + 240) % 360];
+    case 'split': return [hue, (hue + 150) % 360, (hue + 210) % 360];
+    case 'tetradic': return [hue, (hue + 90) % 360, (hue + 180) % 360, (hue + 270) % 360];
+    default: return [hue];
+  }
+}
+
+function renderHarmony() {
+  const colors = getHarmonyColors(baseHue);
+  const container = document.getElementById('harmonyResult');
+  container.innerHTML = '';
+  colors.forEach(h => {
+    const hex = hslToHex(h, 75, 55);
+    const swatch = document.createElement('div');
+    swatch.className = 'harmony-swatch';
+    swatch.style.background = hex;
+    swatch.innerHTML = '<span class="hex">' + hex + '</span>';
+    swatch.addEventListener('click', () => {
+      navigator.clipboard.writeText(hex);
+      swatch.querySelector('.hex').textContent = '已复制!';
+      setTimeout(() => swatch.querySelector('.hex').textContent = hex, 1500);
+    });
+    container.appendChild(swatch);
+  });
+}
+
+function hslToHex(h, s, l) {
+  const [r, g, b] = hslToRgb(h, s, l);
+  return '#' + toHex(r) + toHex(g) + toHex(b);
+}
+
+canvas.addEventListener('click', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left - cx;
+  const y = e.clientY - rect.top - cy;
+  const dist = Math.sqrt(x*x + y*y);
+  if (dist > radius * 0.35 && dist < radius) {
+    baseHue = Math.round((Math.atan2(y, x) * 180 / Math.PI + 360) % 360);
+    drawWheel();
+    renderHarmony();
+  }
+});
+
+document.querySelectorAll('.harmony-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.harmony-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentHarmony = tab.dataset.harmony;
+    renderHarmony();
+  });
+});
+
+drawWheel();
+renderHarmony();
+
+// ===== EMOTION =====
+const emotions = [
+  { name: '红色', en: 'RED', color: '#e63946',
+    desc: '红色是可见光中波长最长的颜色，能直接刺激神经系统，使心跳加速、血压升高。它是火焰和血液的颜色，象征生命、热情和力量。',
+    cn: '吉祥、喜庆、繁荣、驱邪', west: '危险、激情、爱情、警告' },
+  { name: '橙色', en: 'ORANGE', color: '#f4a261',
+    desc: '橙色介于红与黄之间，兼具红色的热情和黄色的温暖。它是夕阳和秋叶的颜色，让人联想到丰收、活力和社交。橙色是最能刺激食欲的颜色。',
+    cn: '温暖、活力、丰收、快乐', west: '活力、友好、创意、廉价' },
+  { name: '黄色', en: 'YELLOW', color: '#e9c46a',
+    desc: '黄色是可见光中最明亮的颜色，在远处也能被轻易识别。它是阳光和金子的颜色，象征光明、智慧和财富。但过多的黄色会让人焦虑。',
+    cn: '尊贵、皇权、光明、财富', west: '快乐、乐观、警告、怯懦' },
+  { name: '绿色', en: 'GREEN', color: '#2a9d8f',
+    desc: '绿色是自然界中最常见的颜色，人眼对绿色最敏感，看绿色时眼睛最放松。它是植物和生命的颜色，象征成长、健康和希望。',
+    cn: '生命、春天、和平、环保', west: '自然、健康、嫉妒、金钱' },
+  { name: '蓝色', en: 'BLUE', color: '#264653',
+    desc: '蓝色是天空和海洋的颜色，能降低心率和血压，让人感到平静和信任。它是世界上最受欢迎的颜色，也是企业品牌最常用的颜色。',
+    cn: '沉静、深邃、永恒、科技', west: '信任、忠诚、冷静、忧郁' },
+  { name: '紫色', en: 'PURPLE', color: '#7b2cbf',
+    desc: '紫色在自然界中极为稀有，古代提取紫色染料成本极高，因此紫色长期与贵族和神秘联系在一起。它是红色的热情和蓝色的冷静的矛盾结合。',
+    cn: '尊贵、祥瑞、道家、神秘', west: '奢华、神秘、创造力、哀悼' },
+  { name: '黑色', en: 'BLACK', color: '#1a1a1a',
+    desc: '黑色不是一种颜色，而是所有光被吸收后的状态。它是最强大的中性色，能让任何颜色在它面前变得鲜艳。黑色象征权力、优雅和未知。',
+    cn: '庄重、神秘、权力、哀悼', west: '优雅、权力、正式、死亡' },
+  { name: '白色', en: 'WHITE', color: '#f5f3ee',
+    desc: '白色是所有光的混合，是最明亮的颜色。它象征纯净、空白和无限可能。在设计中，白色是最好的背景——它让内容呼吸，让焦点清晰。',
+    cn: '纯洁、哀悼、虚无、空灵', west: '纯洁、婚礼、和平、医疗' },
+];
+
+const emotionGrid = document.getElementById('emotionGrid');
+emotions.forEach((em, i) => {
+  const card = document.createElement('div');
+  card.className = 'emotion-card';
+  card.style.background = em.color;
+  card.innerHTML = '<div class="em-name">' + em.name + '</div><div class="em-en">' + em.en + '</div>';
+  card.addEventListener('click', () => {
+    document.getElementById('emDetailName').textContent = em.name + ' · ' + em.en;
+    document.getElementById('emDetailDesc').textContent = em.desc;
+    document.getElementById('emCn').textContent = em.cn;
+    document.getElementById('emWest').textContent = em.west;
+    document.body.style.background = em.color + '15';
+    document.documentElement.style.setProperty('--accent', em.color);
+  });
+  emotionGrid.appendChild(card);
+});
+
+// ===== TRADITIONAL COLORS =====
+const traditionalColors = [
+  { name: '朱砂', pinyin: 'ZHŪ SHĀ', hex: '#FF461F', rgb: '255,70,31', meaning: '硫化汞矿物颜料，千年不褪色。故宫红墙、印章印泥的正色。' },
+  { name: '石青', pinyin: 'SHÍ QĪNG', hex: '#1685A7', rgb: '22,133,167', meaning: '蓝铜矿研磨而成，敦煌壁画中飞天的飘带多用此色。' },
+  { name: '藤黄', pinyin: 'TÉNG HUÁNG', hex: '#FFB61E', rgb: '255,182,30', meaning: '海藤树树脂制成，有毒但色正。国画中常用的透明黄色。' },
+  { name: '月白', pinyin: 'YUÈ BÁI', hex: '#D6ECF0', rgb: '214,236,240', meaning: '月光的颜色，不是纯白而是极淡的蓝。宋代文人最爱的服色。' },
+  { name: '黛蓝', pinyin: 'DÀI LÁN', hex: '#3E4149', rgb: '62,65,73', meaning: '古代女子画眉的黛石之色，深青近黑。远山如黛，说的就是这个颜色。' },
+  { name: '胭脂', pinyin: 'YĀN ZHI', hex: '#9D2933', rgb: '157,41,51', meaning: '红蓝花汁制成，古代女子面妆的核心色。比朱砂更柔，比粉红更沉。' },
+  { name: '藕荷', pinyin: 'ǑU HÉ', hex: '#E4C6D0', rgb: '228,198,208', meaning: '莲藕断面的颜色，淡紫中透着粉。清代旗人服饰的流行色。' },
+  { name: '秋香', pinyin: 'QIŪ XIĀNG', hex: '#D9B611', rgb: '217,182,17', meaning: '秋日桂花的颜色，黄中带绿。《红楼梦》中宝钗的服色。' },
+  { name: '蟹壳青', pinyin: 'XIÈ KÉ QĪNG', hex: '#4A5E5C', rgb: '74,94,92', meaning: '螃蟹壳的青灰色，沉稳内敛。明式家具和瓷器常见的釉色。' },
+  { name: '鹅黄', pinyin: 'É HUÁNG', hex: '#FFF143', rgb: '255,241,67', meaning: '小鹅绒毛的颜色，极嫩极亮。早春柳芽也叫鹅黄，是生命的颜色。' },
+  { name: '紫檀', pinyin: 'ZǏ TÁN', hex: '#4B2E2A', rgb: '75,46,42', meaning: '紫檀木的心材色，深紫近黑。明清皇家家具的顶级用材，寸檀寸金。' },
+  { name: '苍绿', pinyin: 'CĀNG LǙ', hex: '#7BA27A', rgb: '123,162,122', meaning: '苍老的绿色，不是嫩绿而是饱经风霜的深绿。古松、老苔的颜色。' },
+  { name: '琥珀', pinyin: 'HǓ PÒ', hex: '#CA6924', rgb: '202,105,36', meaning: '树脂化石的颜色，暖橙中透着金。古代视为吉祥之物，可入药。' },
+  { name: '缃色', pinyin: 'XIĀNG SÈ', hex: '#F0C239', rgb: '240,194,57', meaning: '浅黄色的书卷气，古代书卷包裹用缃色绫。"缃帙"就是书卷的代称。' },
+  { name: '玄青', pinyin: 'XUÁN QĪNG', hex: '#3D3B4F', rgb: '61,59,79', meaning: '深黑中透出深蓝，是天空将亮未亮时的颜色。古代帝王祭天所穿。' },
+  { name: '绾色', pinyin: 'WǍN SÈ', hex: '#A98175', rgb: '169,129,117', meaning: '浅绛色，如女子发髻上丝带的颜色。温柔、含蓄，是中式审美的代表。' },
+];
+
+const tradGrid = document.getElementById('traditionalGrid');
+traditionalColors.forEach(c => {
+  const card = document.createElement('div');
+  card.className = 'trad-card';
+  card.innerHTML =
+    '<div class="trad-swatch" style="background:' + c.hex + '"></div>' +
+    '<div class="trad-info">' +
+      '<div class="trad-name">' + c.name + '</div>' +
+      '<div class="trad-pinyin">' + c.pinyin + '</div>' +
+      '<div class="trad-hex">' + c.hex + ' · ' + c.rgb + '</div>' +
+      '<div class="trad-meaning">' + c.meaning + '</div>' +
+    '</div>';
+  card.addEventListener('click', () => {
+    navigator.clipboard.writeText(c.hex);
+    card.querySelector('.trad-hex').textContent = '已复制 ' + c.hex + '!';
+    setTimeout(() => card.querySelector('.trad-hex').textContent = c.hex + ' · ' + c.rgb, 1500);
+  });
+  tradGrid.appendChild(card);
+});
+
+// ===== SCROLL REVEAL & NAV =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 200) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.dataset.nav === current);
+  });
+});
+</script>
+</body>
+</html>
