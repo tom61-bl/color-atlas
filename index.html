@@ -298,6 +298,11 @@ footer a { color: var(--text-soft); text-decoration: none; border-bottom: 1px so
 }
 @media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
 
+.case-image {
+  width: 100%; height: 220px; object-fit: cover;
+  display: block;
+}
+
 .case-card {
   background: var(--card); border: 1px solid var(--border);
   border-radius: 20px; overflow: hidden; transition: all 0.3s;
@@ -834,7 +839,7 @@ window.addEventListener('scroll', () => {
 const cases = [
   {
     category: "油画 · Oil Painting",
-    title: "星月夜",
+    title: "星月夜", image: 'images/starry-night.jpg',
     artist: "文森特·梵高 · 1889",
     palette: ["#0D2B45", "#1B4F72", "#2E86C1", "#F4D03F", "#F39C12", "#E74C3C"],
     principles: ["互补色", "高饱和", "冷暖对比"],
@@ -842,7 +847,7 @@ const cases = [
   },
   {
     category: "油画 · Oil Painting",
-    title: "睡莲",
+    title: "睡莲", image: 'images/water-lilies.jpg',
     artist: "克劳德·莫奈 · 1906",
     palette: ["#8FA8B8", "#A8C0B0", "#C5D5C5", "#D4C5A9", "#B8A088", "#6B8E7F"],
     principles: ["邻近色", "低饱和", "柔和过渡"],
@@ -850,7 +855,7 @@ const cases = [
   },
   {
     category: "油画 · Oil Painting",
-    title: "戴珍珠耳环的少女",
+    title: "戴珍珠耳环的少女", image: 'images/pearl-earring.jpg',
     artist: "约翰内斯·维米尔 · 1665",
     palette: ["#1A1A2E", "#2C3E50", "#8B4513", "#D4A574", "#F5DEB3", "#E8D5B7"],
     principles: ["互补色", "明暗法", "有限色域"],
@@ -858,7 +863,7 @@ const cases = [
   },
   {
     category: "中国画 · Chinese Painting",
-    title: "千里江山图",
+    title: "千里江山图", image: 'images/thousand-miles.jpg',
     artist: "王希孟 · 北宋 · 1113",
     palette: ["#1A3C5E", "#2E5E4E", "#4A8B7A", "#7AB8A0", "#C9A86C", "#8B4513"],
     principles: ["青绿主导", "赭石点缀", "随类赋彩"],
@@ -866,7 +871,7 @@ const cases = [
   },
   {
     category: "游戏 · Video Game",
-    title: "纪念碑谷",
+    title: "纪念碑谷", image: 'images/monument-valley.jpg',
     artist: "ustwo · 2014",
     palette: ["#F5E6D3", "#E8B4B8", "#A8C0D0", "#7B9EB0", "#D4A574", "#2C3E50"],
     principles: ["低饱和", "马卡龙色", "几何色块"],
@@ -874,7 +879,7 @@ const cases = [
   },
   {
     category: "游戏 · Video Game",
-    title: "原神 · 璃月",
+    title: "原神 · 璃月", image: 'images/genshin-liyue.jpg',
     artist: "miHoYo · 2020",
     palette: ["#8B0000", "#C41E3A", "#D4A017", "#2C5F4E", "#1A3A5C", "#F5E6D3"],
     principles: ["中国传统色", "暖冷对比", "高识别度"],
@@ -896,6 +901,7 @@ cases.forEach((c, i) => {
     principlesHtml += '<span class="case-principle">' + p + '</span>';
   });
   card.innerHTML =
+    '<img class="case-image" src="' + c.image + '" alt="' + c.title + '">' +
     '<div class="case-header">' +
       '<div class="case-category">' + c.category + '</div>' +
       '<div class="case-title">' + c.title + '</div>' +
